@@ -24,7 +24,7 @@ interface Props {
 const QestionsCard = ({id, title, tags, author, upvotes, views, answers, createdAt}: Props) => {
     return (
         <div
-            className="card-wrapper p-9 sm:px-11 rounded-[10px]"
+            className="card-wrapper rounded-[10px] p-9 sm:px-11"
         >
             <div
                 className="flex  flex-col-reverse items-start justify-between gap-5 sm:flex-row"
@@ -37,7 +37,7 @@ const QestionsCard = ({id, title, tags, author, upvotes, views, answers, created
                     </span>
                     <Link href={`/question/${id}`}>
                         <h3
-                            className="sm:h3-semi-bold line-clamp-1 flex-1"
+                            className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1"
                         >{title}</h3>
                     </Link>
                 </div>

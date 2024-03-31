@@ -114,7 +114,7 @@ const Question = ({mongoUserId}: Props) => {
                             <FormDescription
                                 className="body-regular mt-2.5 text-light-500"
                             >
-                                Imagine you're asking a question to another person.
+                                Imagine you are asking a question to another person.
                             </FormDescription>
                             <FormMessage
                                 className="text-red-500"

@@ -15,7 +15,7 @@ const Home = async () => {
     return (
         <>
             <div
-                className="flex w-full flex-col-reverse justify-between gaap-4 sm:flex-row"
+                className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row"
             >
                 <h1 className="h1-bold text-dark100_light900">All questions</h1>
 
