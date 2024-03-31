@@ -8,7 +8,6 @@ import Question from "@/database/question.model";
 
 
 export async function getUserById(params: any) {
-    console.log(params)
     try {
         connectToDB();
         const {user} = params;
