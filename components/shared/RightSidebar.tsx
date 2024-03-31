@@ -10,11 +10,11 @@ const hotQuestions = [
 ];
 
 const popularTags = [
-    {id: 1, title: "React", totalQuestions: 5},
-    {id: 2, title: "Next.js", totalQuestions: 5},
-    {id: 3, title: "Tailwind CSS", totalQuestions: 5},
-    {id: 4, title: "TypeScript", totalQuestions: 5},
-    {id: 5, title: "JavaScript", totalQuestions: 5},
+    {id: "1", title: "React", totalQuestions: 5},
+    {id: "2", title: "Next.js", totalQuestions: 5},
+    {id: "3", title: "Tailwind CSS", totalQuestions: 5},
+    {id: "4", title: "TypeScript", totalQuestions: 5},
+    {id: "5", title: "JavaScript", totalQuestions: 5},
 ]
 const RightSidebar = () => {
 
