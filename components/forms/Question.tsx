@@ -81,6 +81,9 @@ const Question = ({mongoUserId}: Props) => {
         form.setValue('tags', newTags)
 
     }
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
         <Form {...form}>
             <form
@@ -136,7 +139,8 @@ const Question = ({mongoUserId}: Props) => {
                             >
                                 <Editor
                                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                                    onInit={(evt, editor) => editorRef.current = editor}
+
+                                    onInit={(evt, editor:any) => editorRef.current = editor}
                                     initialValue=""
                                     onBlur={field.onBlur}
                                     onEditorChange={(content, editor) => field.onChange(content)}
