@@ -1,9 +1,10 @@
 
-import {ClerkProvider} from '@clerk/nextjs'
+
 import {Inter, Space_Grotesk} from "next/font/google";
 import type {Metadata} from "next";
-import './app/globals.css'
+import './globals.css'
 import {ThemeProvider} from "@/context/ThemeProvider";
+import {ClerkProvider} from "@clerk/nextjs";
 
 
 const inter = Inter({
