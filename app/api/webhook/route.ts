@@ -55,6 +55,8 @@ export async function POST(req: Request) {
 
     console.log(`Event ID: ${id}, Event Type: ${eventType}`)
 
+    console.log(`Event ID: ${id}, Event Type: ${eventType}`)
+
     if (eventType === 'user.created') {
         const {id, email_addresses, image_url, username, first_name, last_name} = evt.data;
         const mongoUser = await createUser({
