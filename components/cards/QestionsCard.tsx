@@ -60,7 +60,7 @@ const QestionsCard = ({id, title, tags, author, upvotes, views, answers, created
                 className="flex-between mt-3.5 w-full flex-wrap gap-3"
             >
                 <Metric
-                    imgUrl="/assets/icons/avatar.png"
+                    imgUrl={author.picture}
                     title=" - asked "
                     alt="user"
                     value={author.name}
