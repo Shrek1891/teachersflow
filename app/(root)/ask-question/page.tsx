@@ -1,12 +1,12 @@
 'use server'
 import Question from "@/components/forms/Question";
-import {auth} from "@clerk/nextjs";
 import {redirect} from "next/navigation";
 import {getUserById} from "@/lib/actions/user.action";
 
 const page = async () => {
     //const {userId} = await auth();
-    const userId=process.env.CLERK_ID
+    //const userId=process.env.CLERK_ID
+    const userId = "user_2cquGmKqcQKQMwtCn70ztxxGIGD"
     if (!userId) redirect('/sign-in')
 
     const mongoUser = await getUserById({user: userId});
