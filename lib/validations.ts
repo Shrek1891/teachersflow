@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const AnswerSchema = z.object({
-    answer: z.string().min(100, { message: "Minimum of 100 characters." }),
+    answer: z.string().min(5, { message: "Minimum of 5 characters." }),
 });
 
 export const ProfileSchema = z.object({

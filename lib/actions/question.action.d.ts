@@ -91,6 +91,7 @@ export interface EditQuestionParams {
     title: string;
     content: string;
     path: string;
+    tags: string[];
 }
 export interface GetAllTagsParams {
     page?: number;

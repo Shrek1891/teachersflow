@@ -7,7 +7,6 @@ import MobileNav from "@/components/shared/MobileNav";
 import GlobalSearch from "@/components/shared/search/GlobalSearch";
 
 const Navbar = () => {
-
     return (
         <nav
             className="flex-between background-light850_dark200
@@ -26,12 +25,14 @@ const Navbar = () => {
                     className="h2-bold font-spaceGrotesk text-dark-100
                     dark:text-light-900 max-sm:hidden"
 
-                >Dev
+                >Ask
                     <span
                         className="text-primary-500"
                     >
-                        Flow
-                    </span></p>
+                        About
+                    </span>
+                    All
+                </p>
             </Link>
             <GlobalSearch/>
             <div className="flex-between gap-5">
@@ -50,7 +51,7 @@ const Navbar = () => {
                         afterSignOutUrl="/"
                     />
                 </SignedIn>
-                <MobileNav />
+                <MobileNav/>
             </div>
         </nav>
     )

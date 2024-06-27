@@ -10,43 +10,63 @@ import React, {useRef, useState} from 'react';
 import {Editor} from '@tinymce/tinymce-react';
 import {Badge} from "@/components/ui/badge";
 import Image from "next/image";
-import {createQuestion} from "@/lib/actions/question.action";
+import {createQuestion, editQuestion} from "@/lib/actions/question.action";
 import {usePathname, useRouter} from "next/navigation";
+import {useTheme} from "@/context/ThemeProvider";
 
-const type:any = 'create'
 
 interface Props {
     mongoUserId: string
+    type?: string
+    qustionDetails?: string
 }
 
-const Question = ({mongoUserId}: Props) => {
+const Question = ({mongoUserId, type, qustionDetails}: Props) => {
+    console.log(mongoUserId)
     const [isSubmiting, setIsSubmitting] = useState(false)
     const router = useRouter();
-    const pathname = usePathname()  ;
+    const pathname = usePathname();
+    const {mode} = useTheme()
+    const parsedQuestionDetails =qustionDetails && JSON.parse(qustionDetails || "{}")
+    const groupedTags = parsedQuestionDetails?.tags?.map((tag: any) => tag.name)
     const form = useForm<z.infer<typeof QuestionSchema>>({
         resolver: zodResolver(QuestionSchema),
         defaultValues: {
-            title: "",
-            explanation: "",
-            tags: [],
+            title: parsedQuestionDetails?.title || "",
+            explanation: parsedQuestionDetails?.content || "",
+            tags: groupedTags || [],
         },
     })
     const editorRef = useRef(null);
 
 
     // 2. Define a submit handler.
-    async function  onSubmit(values: z.infer<typeof QuestionSchema>) {
+    async function onSubmit(values: z.infer<typeof QuestionSchema>) {
         setIsSubmitting(true)
         try {
-            await createQuestion({
-                title: values.title,
-                content: values.explanation,
-                tags: values.tags,
-                author: JSON.parse(mongoUserId),
-                path: pathname
-            });
-            router.push("/")
-            
+            if (type === "edit") {
+
+                await editQuestion({
+                    questionId: parsedQuestionDetails?._id,
+                    title: values.title,
+                    content: values.explanation,
+                    tags: values.tags,
+                    path: pathname
+                })
+                router.push(`/question/${parsedQuestionDetails?._id}`)
+
+            } else {
+                await createQuestion({
+                    title: values.title,
+                    content: values.explanation,
+                    tags: values.tags,
+                    author: JSON.parse(mongoUserId),
+                    path: pathname
+                });
+                router.push("/")
+            }
+
+
         } catch (error) {
             console.log(error)
         } finally {
@@ -81,9 +101,7 @@ const Question = ({mongoUserId}: Props) => {
         form.setValue('tags', newTags)
 
     }
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
+
     return (
         <Form {...form}>
             <form
@@ -140,8 +158,8 @@ const Question = ({mongoUserId}: Props) => {
                                 <Editor
                                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
 
-                                    onInit={(evt, editor:any) => editorRef.current = editor}
-                                    initialValue=""
+                                    onInit={(evt, editor: any) => editorRef.current = editor}
+                                    initialValue={parsedQuestionDetails?.content || ""}
                                     onBlur={field.onBlur}
                                     onEditorChange={(content, editor) => field.onChange(content)}
                                     init={{
@@ -156,7 +174,9 @@ const Question = ({mongoUserId}: Props) => {
                                             'bold italic forecolor | alignleft aligncenter ' +
                                             'alignright alignjustify | bullist numlist outdent indent | ' +
                                             'removeformat | help',
-                                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                        skin: mode === 'light' ? 'oxide' : 'oxide-dark',
+                                        content_css: mode === 'dark' ? 'dark' : 'light'
                                     }}
                                 />
 
@@ -193,6 +213,7 @@ const Question = ({mongoUserId}: Props) => {
                                     background-light900_dark300 light-border-2
                                     text-dark300_light700 min-h-[56px] border
                                     "
+                                        disabled={type === "edit"}
                                         placeholder="Add tags..."
                                         onKeyDown={(e) => {
                                             handleInputKeydown(e, field)
@@ -209,17 +230,17 @@ const Question = ({mongoUserId}: Props) => {
                                                     justify-center gap-2 rounded-md border-none px-4 py-2 capitalize
                                                     "
                                                     onClick={() => {
-                                                        handleTagRemove(tag, field)
+                                                        type !== "edit" ? handleTagRemove(tag, field) : ()=>{}
                                                     }}
                                                 >
                                                     {tag}
-                                                    <Image
+                                                    {type !== "edit" && <Image
                                                         src="/assets/icons/close.png"
                                                         alt="close icon"
                                                         width={12}
                                                         height={12}
                                                         className="cursor-pointer object-contain invert-0  dark:invert"
-                                                    />
+                                                    />}
                                                 </Badge>
                                             ))
 

@@ -9,10 +9,7 @@ const page = async () => {
     const {userId} = await auth();
     //const userId=process.env.CLERK_ID
     if (!userId) redirect('/sign-in')
-
-    const mongoUser = await getUserById({user: userId});
-
-
+    const mongoUser = await getUserById({ userId });
     return (
         <div>
             <h1 className="h1-bold text-dark100_light900">Ask a question</h1>

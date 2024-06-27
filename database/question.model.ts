@@ -1,14 +1,14 @@
-import {Schema, model, Document, models} from "mongoose";
+import {Document, model, models, Schema} from "mongoose";
 
-export interface IQuestion extends Document{
+export interface IQuestion extends Document {
     title: string;
     explanation: string;
-    tags: Schema.Types.ObjectId[];
+    tags: { _id: string; name: string; }[];
     views: number;
     upvotes: Schema.Types.ObjectId[];
     downvotes: Schema.Types.ObjectId[];
     answers: Schema.Types.ObjectId[];
-    author: Schema.Types.ObjectId;
+    author: { _id: string; clerkId: string; name: string; picture: string; }
     createdAt: Date;
 
 }
@@ -25,6 +25,6 @@ const QuestionSchema = new Schema({
     createdAt: {type: Date, default: Date.now},
 })
 
-const Question = models.Question || model ("Question", QuestionSchema)
+const Question = models.Question || model("Question", QuestionSchema)
 
 export default Question

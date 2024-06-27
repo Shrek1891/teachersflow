@@ -1,6 +1,7 @@
 import {Inter, Space_Grotesk} from "next/font/google";
 import type {Metadata} from "next";
 import './globals.css'
+import "../styles/prism.css"
 import {ThemeProvider} from "@/context/ThemeProvider";
 import {ClerkProvider} from "@clerk/nextjs";
 
@@ -17,12 +18,14 @@ const spaceGrotesk = Space_Grotesk({
     variable: '--font-spaceGrotesk',
 })
 export const metadata: Metadata = {
-    title: 'DevFlow',
-    description: 'A place to learn and build dev skills',
+    title: 'Ask me anything about languages',
+    description: 'A place to learn and build your skills',
     icons: {
         icon: '/logo.svg',
     },
 }
+
+
 
 export default function RootLayout({
                                        children,

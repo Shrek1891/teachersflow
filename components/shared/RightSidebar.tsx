@@ -1,23 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import RenderTag from "@/components/shared/RenderTag";
+import {getHotQuestions} from "@/lib/actions/question.action";
+import {getTopPopularTags} from "@/lib/actions/tag.action";
 
-const hotQuestions = [
-    {id: 1, title: "What is React?"},
-    {id: 2, title: "What is Next.js?"},
-    {id: 3, title: "What is Tailwind CSS?"},
-    {id: 4, title: "What is TypeScript?"},
-];
 
-const popularTags = [
-    {id: "1", title: "React", totalQuestions: 5},
-    {id: "2", title: "Next.js", totalQuestions: 5},
-    {id: "3", title: "Tailwind CSS", totalQuestions: 5},
-    {id: "4", title: "TypeScript", totalQuestions: 5},
-    {id: "5", title: "JavaScript", totalQuestions: 5},
-]
-const RightSidebar = () => {
 
+
+const RightSidebar =async () => {
+    const hotQuestions = await getHotQuestions()
+    const popularTags = await getTopPopularTags()
     return (
         <section
             className='custom-scrollbar background-light900_dark200 light-border sticky left-0 top-0 flex h-screen
@@ -32,7 +24,7 @@ const RightSidebar = () => {
                         return (
                             <Link
                                 className='flex cursor-pointer items-center justify-between gap-7'
-                                href={`/questions/${question.id}`} key={question.id}>
+                                href={`/question/${question.id}`} key={question.id}>
                                 <p
                                     className='text-dark500_light700 body-medium'
                                 >{question.title}</p>
@@ -57,8 +49,8 @@ const RightSidebar = () => {
                             <RenderTag
                                 key={tag.id}
                                 id={tag.id}
-                                title={tag.title}
-                                totalQuestions={tag.totalQuestions}
+                                title={tag.name}
+                                totalQuestions={tag.numberOfQuestions}
                                 showCount
                             />
                         )

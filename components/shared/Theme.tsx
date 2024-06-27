@@ -8,12 +8,11 @@ const Theme = () => {
     const {mode, setMode} = useTheme()
     return (
         <Menubar
-            className="relative border-none bg-transparent shadow-none"
+            className="relative border-none bg-transparent shadow-none dark:bg-transparent"
         >
             <MenubarMenu>
                 <MenubarTrigger
-                    className="focus::bg-light-900 data-[state=open]:bg-light-900
-                    dark:focus::bg-dark-200 dark:data-[state=open]:bg-dark-200"
+                    className="focus:bg-light-900 data-[state=open]:bg-light-900 dark:focus:bg-dark-200 dark:data-[state=open]:bg-dark-200"
                 >{
                     mode === 'light' ? (
                         <Image
@@ -29,35 +28,41 @@ const Theme = () => {
                 }</MenubarTrigger>
                 <MenubarContent
                     className="absolute right-[-3rem] mt-3 min-w-[120px] rounded
-                    border py-2 dark:border-dark-400 dark:bg-dark-300
-                    "
+                    border py-2 dark:border-dark-400 dark:bg-dark-300 bg-light-900
+                     dark:focus:bg-dark-400 cursor-pointer"
                 >
-                    {themes.map((option) => (
+                    {themes.map((item) => (
                         <MenubarItem
-                            key={option.value}
+                            key={item.value}
+                            className='flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400 focus:bg-light-800 '
                             onClick={() => {
-                                setMode(option.value)
-                                if (option.value !== 'system') {
-                                    localStorage.theme = option.value
+                                setMode(item.value);
+                                if (item.value !== "system") {
+                                    localStorage.theme = item.value;
                                 } else {
-                                    localStorage.removeItem('theme')
+                                    localStorage.removeItem("theme");
                                 }
                             }}
-                            className="flex items-center
-                                gap-4 px-2.5 py-1.5
-                                dark:focus:bg-dark-400
-                                "
                         >
                             <Image
-                                src={option.icon} alt={option.label} width={23} height={23}
-                                className={`${mode === option.value ? 'active-theme' : ''}`}
+                                src={item.icon}
+                                alt={item.value}
+                                width={16}
+                                height={16}
+                                className={`${mode === item.value && "active-theme"}`}
                             />
-                            <p
-                                className={`body-semibold text-light-500 ${mode === option.value ? 'active-theme' : ''}`}
 
-                            >{option.label}</p>
-                        </MenubarItem>))
-                    }
+                            <p
+                                className={`body-semibold text-light-500 ${
+                                    mode === item.value
+                                        ? "text-primary-500"
+                                        : "text-dark100_light900"
+                                }`}
+                            >
+                                {item.label}
+                            </p>
+                        </MenubarItem>
+                    ))}
 
                 </MenubarContent>
             </MenubarMenu>

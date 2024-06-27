@@ -6,12 +6,38 @@ import {HomePageFilters} from "@/constants/filters";
 import HomeFilters from "@/components/home/HomeFilters";
 import NoResult from "@/components/shared/NoResult";
 import QestionsCard from "@/components/cards/QestionsCard";
-import {getQestions} from "@/lib/actions/question.action";
+import {getQuestions, getRecommendedQuestions} from "@/lib/actions/question.action";
+import {SearchParamsProps} from "@/types";
+import Pagination from "@/components/shared/Pagination";
+import {auth} from "@clerk/nextjs";
 
 
+const Home = async ({searchParams}: SearchParamsProps) => {
+    const {userId} = auth();
 
-const Home = async () => {
-    const result = await getQestions({});
+    let result;
+    if (searchParams?.filter === "recommended") {
+        if (userId) {
+            result = await getRecommendedQuestions({
+                userId,
+                searchQuery: searchParams.q,
+                page: searchParams.page ? +searchParams.page : 1,
+            });
+        } else {
+            result = {
+                questions: [],
+                isNext: false,
+            };
+        }
+    } else {
+        result = await getQuestions({
+            page: searchParams.page ? +searchParams.page : 1,
+            searchQuery: searchParams.q,
+            filter: searchParams.filter,
+        });
+    }
+
+
     return (
         <>
             <div
@@ -50,18 +76,18 @@ const Home = async () => {
             </div>
             <HomeFilters/>
             <div className="mt-10 flex w-full flex-col gap-6">
-                {result && result.questions.length > 0  ?
+                {result && result.questions.length > 0 ?
                     result.questions.map((question) => (
                         <QestionsCard
-                        id={question.id}
-                        title={question.title}
-                        tags={question.tags}
-                        author={question.author}
-                        upvotes={question.upvotes}
-                        views={question.views}
-                        answers={question.answers}
-                        createdAt={question.createdAt}
-                        key={question.id}/>
+                            _id={question.id}
+                            title={question.title}
+                            tags={question.tags}
+                            author={question.author}
+                            upvotes={question.upvotes.length}
+                            views={question.views}
+                            answers={question.answers}
+                            createdAt={question.createdAt}
+                            key={question.id}/>
                     )) : <NoResult
                         title={"There is no question to show"}
                         description={"Ask a question"}
@@ -71,6 +97,13 @@ const Home = async () => {
                     />
                 }
             </div>
+            <div className="mt-10">
+                <Pagination
+                    pageNumber={searchParams?.page ? +searchParams?.page : 1}
+                    isNext={result?.isNext}
+                />
+            </div>
+
         </>
 
     );

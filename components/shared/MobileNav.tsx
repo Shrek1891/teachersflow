@@ -29,14 +29,11 @@ const NavContent = () => {
                                 className={`${isActive} ? "base-bold" : "base-medium"}`}
                             >{item.label}</p>
                         </Link>
-
                     </SheetClose>
                 )
-
             })}
         </section>
     )
-
 }
 const MobileNav = () => {
     return (
@@ -49,9 +46,7 @@ const MobileNav = () => {
                     height={36}
                     className="invert-colors cursor-pointer sm:hidden"
                 />
-
             </SheetTrigger>
-
             <SheetContent
                 side="left"
                 className="background-light900_dark200 border-none"
@@ -66,13 +61,14 @@ const MobileNav = () => {
                         className="h2-bold  text-dark-100_light900
                         font-spaceGrotesk
                     "
-
-                    >Dev
+                    >Ask
                         <span
                             className="text-primary-500"
                         >
-                        Flow
-                    </span></p>
+                            About
+                    </span>
+                        All
+                    </p>
                 </Link>
                 <div>
                     <SheetClose asChild>
@@ -89,10 +85,8 @@ const MobileNav = () => {
                                         <span className="primary-text-gradient">
                                           Log In
                                         </span>
-
                                     </Button>
                                 </Link>
-
                             </SheetClose>
                             <SheetClose asChild>
                                 <Link href="/sign-up">
@@ -103,7 +97,6 @@ const MobileNav = () => {
                                         Sign Up
                                     </Button>
                                 </Link>
-
                             </SheetClose>
                         </div>
                     </SignedOut>
