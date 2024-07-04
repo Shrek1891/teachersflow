@@ -15,7 +15,6 @@ const Page = async ({params, searchParams}: URLProps) => {
             searchQuery: searchParams.q,
         }
     )
-    console.log(result.questions)
     return (
         <>
             <h1 className="h1-bold text-dark100_light900">{result.tagTitle}</h1>
